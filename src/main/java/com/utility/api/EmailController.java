@@ -1,7 +1,7 @@
 package com.utility.api;
 
-import com.utility.service.PlaceholderResolverService;
-import com.utility.service.TemplateService;
+import com.utility.service.contracts.PlaceholderResolverService;
+import com.utility.service.contracts.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

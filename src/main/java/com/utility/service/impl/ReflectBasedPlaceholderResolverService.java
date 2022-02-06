@@ -1,6 +1,6 @@
 package com.utility.service.impl;
 
-import com.utility.service.PlaceholderResolverService;
+import com.utility.service.contracts.PlaceholderResolverService;
 import org.springframework.stereotype.Service;
 
 @Service

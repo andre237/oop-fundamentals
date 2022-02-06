@@ -1,6 +1,6 @@
 package com.utility.config.factories;
 
-import com.utility.service.TemplateService;
+import com.utility.service.contracts.TemplateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

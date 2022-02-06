@@ -1,4 +1,4 @@
-package com.utility.service;
+package com.utility.service.contracts;
 
 import com.utility.util.AppConstants;
 

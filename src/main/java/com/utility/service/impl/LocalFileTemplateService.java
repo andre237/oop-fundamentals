@@ -1,6 +1,6 @@
 package com.utility.service.impl;
 
-import com.utility.service.TemplateService;
+import com.utility.service.contracts.TemplateService;
 import org.springframework.stereotype.Service;
 
 import java.net.URL;

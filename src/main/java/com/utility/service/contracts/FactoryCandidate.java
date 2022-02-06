@@ -1,4 +1,4 @@
-package com.utility.service;
+package com.utility.service.contracts;
 
 public interface FactoryCandidate {
 
