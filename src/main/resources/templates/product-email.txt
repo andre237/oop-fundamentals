@@ -1,0 +1,4 @@
+##### TEMPLATE PARA PRODUTOS #####
+
+Nome: ${name}
+Valor: ${value1}

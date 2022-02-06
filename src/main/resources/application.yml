@@ -1,0 +1,5 @@
+app:
+  factory:
+    impl:
+      template: local-file
+      placehoders: reflection
