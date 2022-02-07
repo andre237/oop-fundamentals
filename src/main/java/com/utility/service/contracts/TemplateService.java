@@ -5,6 +5,7 @@ import com.utility.util.AppConstants;
 public interface TemplateService extends FactoryCandidate {
 
     String getTemplate(String templateKey);
+    String getSubTemplate(String subTemplateKey);
 
     class NoOpTemplateService implements TemplateService {
         @Override
@@ -14,6 +15,11 @@ public interface TemplateService extends FactoryCandidate {
 
         @Override
         public String getTemplate(String templateKey) {
+            return "<null>";
+        }
+
+        @Override
+        public String getSubTemplate(String subTemplateKey) {
             return "<null>";
         }
     }

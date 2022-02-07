@@ -1,31 +1,32 @@
 package com.utility.api;
 
-import com.utility.service.contracts.PlaceholderResolverService;
-import com.utility.service.contracts.TemplateService;
+import com.utility.common.dto.EmailRequestDTO;
+import com.utility.service.impl.EmailSendingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("email")
 public class EmailController {
 
-    private final TemplateService templateService;
-    private final PlaceholderResolverService resolverService;
+    private final EmailSendingService emailSendingService;
 
     @Autowired
-    public EmailController(TemplateService templateService,
-                           PlaceholderResolverService resolverService) {
-        this.templateService = templateService;
-        this.resolverService = resolverService;
+    public EmailController(EmailSendingService emailSendingService) {
+        this.emailSendingService = emailSendingService;
     }
 
-    @GetMapping("test")
-    public ResponseEntity<String> testService() {
-        System.out.println(templateService.getTemplate("test"));
-        return ResponseEntity.ok("test");
+    @PostMapping("send")
+    public ResponseEntity<String> createEmailRequest(@RequestBody EmailRequestDTO emailRequest) {
+        emailSendingService.processEmailRequest(emailRequest);
+        return ResponseEntity.accepted().build();
     }
 
 }

@@ -1,0 +1,6 @@
+##### TEMPLATE PARA ORDENS #####
+
+ID: ${id}
+Data: ${createTs}
+Itens:
+$[orderItems]

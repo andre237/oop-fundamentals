@@ -8,6 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class LocalFileTemplateService implements TemplateService {
@@ -18,12 +20,21 @@ public class LocalFileTemplateService implements TemplateService {
     @Override
     public String getTemplate(String templateKey) {
         // look up from sub templates first
-        final var possibilities = Arrays.asList(
+        return this.findTemplate(Arrays.asList(
                 String.format(SUB_TEMPLATES_LOCATION, templateKey),
                 String.format(TEMPLATES_LOCATION, templateKey)
-        );
+        ));
+    }
 
-        for (String t : possibilities) {
+    @Override
+    public String getSubTemplate(String subTemplateKey) {
+        return this.findTemplate(Collections.singletonList(
+                String.format(SUB_TEMPLATES_LOCATION, subTemplateKey)
+        ));
+    }
+
+    private String findTemplate(List<String> possibleLocations) {
+        for (String t : possibleLocations) {
             try {
                 URL resource = this.getClass().getClassLoader().getResource(t);
                 if (resource != null) {
