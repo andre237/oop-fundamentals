@@ -1,39 +1,41 @@
 package com.utility.service.impl.internal.adapters.bind;
 
-import com.google.common.reflect.Reflection;
 import com.utility.service.impl.internal.adapters.TypeAdapter;
 import com.utility.service.impl.internal.adapters.TypeAdapterFactory;
 import com.utility.service.impl.internal.adapters.TypeAdaptersContext;
-import com.utility.util.GsonReflectionUtils;
-import org.springframework.util.ReflectionUtils;
+import com.utility.util.TemplateWriter;
 
-import java.lang.reflect.Type;
 import java.util.Map;
 
 public class MapObjectValueAdapterFactory implements TypeAdapterFactory {
 
     @Override
     public <T> TypeAdapter<T> create(TypeAdaptersContext context, Class<T> clazz) {
-        if (!Map.class.isAssignableFrom(clazz)) {
-            return null;
-        } else {
-            Class<?> rawType = GsonReflectionUtils.getRawType(clazz);
-            Type mapValueType = GsonReflectionUtils.getMapKeyAndValueTypes(clazz, rawType)[1];
-            var valueAdapter = context.getAdapter(mapValueType.getClass());
-
-            return new MapObjectValueAdapterFactory.Adapter();
-        }
+        return !Map.class.isAssignableFrom(clazz) ? null : (TypeAdapter<T>) new Adapter<>(context);
     }
 
-    private final class Adapter<V> implements TypeAdapter<Map<String, V>> {
-        @Override
-        public String writeValue(Map<String, V> data) {
-            return null;
+    private static final class Adapter<V> implements TypeAdapter<Map<String, V>> {
+
+        private final TypeAdaptersContext context;
+
+        public Adapter(TypeAdaptersContext context) {
+            this.context = context;
         }
 
         @Override
-        public String writeValue(Map<String, V> data, String token) {
-            return null;
+        public void proccessValue(Map<String, V> data, TemplateWriter template) {
+            for (var entry : data.entrySet()) {
+                String placeholderName = entry.getKey();
+                V placeHolderValue = entry.getValue();
+
+                TypeAdapter<V> adapter = (TypeAdapter<V>) context.getAdapter(placeHolderValue.getClass());
+                adapter.proccessValue(placeHolderValue, placeholderName, template);
+            }
+        }
+
+        @Override
+        public void proccessValue(Map<String, V> data, String token, TemplateWriter template) {
+
         }
     }
 
